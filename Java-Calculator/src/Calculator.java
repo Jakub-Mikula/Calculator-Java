@@ -6,8 +6,8 @@ public class Calculator implements ActionListener{
     JFrame frame;
     JTextField textField;
     JButton[] numbers = new JButton[10];
-    JButton[] operators = new JButton[8];
-    JButton addButton, subtractButton, multiplyButton, divideButton, decimalButton, equalsButton, deleteButton, clearButton;
+    JButton[] operators = new JButton[9];
+    JButton addButton, subtractButton, multiplyButton, divideButton, decimalButton, equalsButton, deleteButton, clearButton, negativeButton;
     JPanel panel;
 
     Font myFont = new Font("Helvetica", Font.BOLD,30);
@@ -34,6 +34,7 @@ public class Calculator implements ActionListener{
         equalsButton = new JButton("=");
         deleteButton = new JButton("DEL");
         clearButton = new JButton("CE");
+        negativeButton = new JButton("(-)");
         operators[0] = addButton;
         operators[1] = subtractButton;
         operators[2] = multiplyButton;
@@ -42,6 +43,7 @@ public class Calculator implements ActionListener{
         operators[5] = equalsButton;
         operators[6] = deleteButton;
         operators[7] = clearButton;
+        operators[8] = negativeButton;
         for (JButton jButton : operators) {
             jButton.addActionListener(this);
             jButton.setFont(myFont);
@@ -55,8 +57,9 @@ public class Calculator implements ActionListener{
             numbers[i].setFocusable(false);
         }
 
-        deleteButton.setBounds(50,430,145,50); //manually set delete button
-        clearButton.setBounds(205,430,145,50); //manually set clear button
+        negativeButton.setBounds(50,430,100,50);
+        deleteButton.setBounds(150,430,100,50); //manually set delete button
+        clearButton.setBounds(250,430,100,50); //manually set clear button
 
         panel = new JPanel(); //created grid panel for numbers and operators
         panel.setBounds(50,100,300,300);
@@ -82,6 +85,7 @@ public class Calculator implements ActionListener{
         frame.add(panel);
         frame.add(deleteButton);
         frame.add(clearButton);
+        frame.add(negativeButton);
         frame.add(textField); //this adds the text field into to load-out
         frame.setVisible(true);  //keep one line clear before this, this needs to be last
     }
@@ -92,6 +96,55 @@ public class Calculator implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        for (int i = 0; i < numbers.length; i++){  // this writes into the input the value of pressed number button
+            if (e.getSource() == numbers[i]){
+                textField.setText(textField.getText() + i);
+            }
+        }
+        if (e.getSource() == decimalButton){
+            textField.setText(textField.getText() + ".");
+        }else if(e.getSource() == addButton){
+            number1 = Double.parseDouble(textField.getText());
+            operator = '+';
+            textField.setText("");
+        }else if(e.getSource() == subtractButton){
+            number1 = Double.parseDouble(textField.getText());
+            operator = '-';
+            textField.setText("");
+        }else if(e.getSource() == multiplyButton){
+            number1 = Double.parseDouble(textField.getText());
+            operator = '*';
+            textField.setText("");
+        }else if(e.getSource() == divideButton){
+            number1 = Double.parseDouble(textField.getText());
+            operator = '/';
+            textField.setText("");
+        }else if(e.getSource() == clearButton){
+            textField.setText("");
+        }else if(e.getSource() == deleteButton){
+            textField.setText(textField.getText().substring(0, textField.getText().length()-1));
+        }else if(e.getSource() == negativeButton){
+           double temp = Double.parseDouble(textField.getText());
+           temp*=-1;
+           textField.setText(String.valueOf(temp));
+        }else if(e.getSource() == equalsButton){
+            number2 = Double.parseDouble(textField.getText());
+            switch (operator){
+                case '+':
+                    result = number1 + number2;
+                    break;
+                case '-':
+                    result = number1 - number2;
+                    break;
+                case '*':
+                    result = number1 * number2;
+                    break;
+                case '/':
+                    result = number1 / number2;
+                    break;
+            }
+            textField.setText(String.valueOf(result));
+            number1 = result;
+        }
     }
 }
