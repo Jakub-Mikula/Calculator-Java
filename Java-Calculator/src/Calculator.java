@@ -42,10 +42,10 @@ public class Calculator implements ActionListener{
         operators[5] = equalsButton;
         operators[6] = deleteButton;
         operators[7] = clearButton;
-        for (int i = 0; i < operators.length; i++){
-            operators[i].addActionListener(this);
-            operators[i].setFont(myFont);
-            operators[i].setFocusable(false);
+        for (JButton jButton : operators) {
+            jButton.addActionListener(this);
+            jButton.setFont(myFont);
+            jButton.setFocusable(false);
         }
 
         for (int i = 0; i < numbers.length; i++){ //numbers
@@ -55,12 +55,34 @@ public class Calculator implements ActionListener{
             numbers[i].setFocusable(false);
         }
 
-        deleteButton.setBounds(50,430,145,50);
-        clearButton.setBounds(205,430,145,50);
+        deleteButton.setBounds(50,430,145,50); //manually set delete button
+        clearButton.setBounds(205,430,145,50); //manually set clear button
 
+        panel = new JPanel(); //created grid panel for numbers and operators
+        panel.setBounds(50,100,300,300);
+        panel.setLayout(new GridLayout(4,4,10,10));
+
+        panel.add(numbers[1]); //first row;
+        panel.add(numbers[2]);
+        panel.add(numbers[3]);
+        panel.add(addButton);
+        panel.add(numbers[4]); //second row;
+        panel.add(numbers[5]);
+        panel.add(numbers[6]);
+        panel.add(subtractButton);
+        panel.add(numbers[7]); //third row;
+        panel.add(numbers[8]);
+        panel.add(numbers[9]);
+        panel.add(multiplyButton);
+        panel.add(decimalButton);//fourth row
+        panel.add(numbers[0]);
+        panel.add(equalsButton);
+        panel.add(divideButton);
+
+        frame.add(panel);
         frame.add(deleteButton);
         frame.add(clearButton);
-        frame.add(textField); //this adds the text field into to loadout
+        frame.add(textField); //this adds the text field into to load-out
         frame.setVisible(true);  //keep one line clear before this, this needs to be last
     }
 
